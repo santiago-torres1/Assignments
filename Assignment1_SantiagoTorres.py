@@ -96,7 +96,7 @@ print("{0:-^60s}".format(''))
 print("GRAND TOTAL: ", "${:.2f}".format(subtotalWithDiscount()))
     
 confirmationStudent = str(input("Perfect! Now, is the customer a student? [y/n]:")) #This input will ask if the customer is a student
-while not(confirmationStudent.strip().upper() == ("Y" or "N")): #Once again, just in case the user types something different from y or n
+while not((confirmationStudent.strip().upper() == ("Y")) or (confirmationStudent.strip().upper() == ("N"))): #Once again, just in case the user types something different from y or n
     confirmationStudent = input("Sorry, that was not a valid answer. Is the customer a student? [y/n]:")
 if confirmationStudent.strip().upper() == "Y": #Another condition, if the customer is a student, 10% will apply
     discountStudent = 0.9
@@ -127,7 +127,7 @@ if discountStudent == 1: #This condition will apply if the customer is not a stu
     print(("" + "\t").expandtabs(40) + ("TOTAL" + "\t" + "${:.2f}").expandtabs(10).format(totalWithTax))
 else: #This condition will apply if the customer is a student, and it will show the information regarding student savings.
     print (("{}" + " ({})" + "\t").format("Discount for big purchase", percentage).expandtabs(20) + ("\t" + "-${:.2f}").format(discount).expandtabs(10))
-    print (("{}" + "\t").format("10% Student Savings").expandtabs(40) + ("\t" + "-${:.2f}").format(subtotalWithDiscount()*0.1).expandtabs(10))
+    print (("{}" + "\t").format("10% Student Savings").expandtabs(40) + ("\t" + "-${:.2f}").format(subtotal()*0.1).expandtabs(10))
     print(("" + "\t").expandtabs(40) + ("Subtotal" + "\t" + "${:.2f}").expandtabs(10).format(totalWithStudentDiscount))
     print(("" + "\t").expandtabs(40) + ("Tax (13%)" + "\t" + "${:.2f}").expandtabs(10).format(Tax))
     print(("" + "\t").expandtabs(40) + ("TOTAL" + "\t" + "${:.2f}").expandtabs(10).format(totalWithTax))
