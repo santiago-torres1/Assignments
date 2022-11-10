@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 """
-Name: Assignment1.py
+Name: Assignment2.py
 Author: Santiago Torres
 Date created: 10/08/2022
-Date last modified: 10/11/2022
+Date last modified: 11/10/2022
 This program is designed to work for Arnold's  restaurant, and the user should be one of the employees. This program will
     ask customer information, then which and how many meals, then apply respective discounts and finally print the receipt.
 """
-customerData = {
+customerData = { #This dictionary will store customer data, it will get it from the inputs
     "firstName" : "",
     "lastName" : "",
     "address" : "",
@@ -18,7 +18,7 @@ customerData = {
     "phoneNumber" : "",
         } 
    
-meals = {
+meals = { #This dictionary is a nested dictionary that contains information of all the available meals in menu
     "1" : {
         "Name" : "Poutine",
         "Price" : 7.99,
@@ -45,7 +45,7 @@ meals = {
         }
     }
 
-orderData = {
+orderData = { #This dictionary will store the order data
     "mealNumber" : "",
     "mealName" : "",
     "mealPrice" : "",
@@ -90,14 +90,14 @@ def discountPercentage(a):
         discount = a*0.15
         return percentage, discount
     
-def discountStudent(a, b, c):
-    if a == True : #Another condition, if the customer is a student, 10% will apply
+def discountStudent(a, b, c): #this function will calculate the student discount, the taxes and the delivery fees and tips (if aplicable).
+    if a == True : # if the customer is a student, 10% will apply
             discountStudent = 0.9
     else: #If the customer is not a student, no discount will apply
             discountStudent = 1    
     total = subtotalWithDiscount(orderData.get("mealPrice")*int(orderData.get("mealQuantity")))*discountStudent #Calculation regarding student discount
     tax = total* 0.13 #Calculation of the tax
-    if b == True:
+    if b == True: #condition of the delivery fees and tips.
         if total <= 30:
             deliveryFee = 5.00
         elif total > 30:
@@ -115,7 +115,7 @@ def discountStudent(a, b, c):
         tip = 0.00
         deliveryFee = 0.00
         tip2 = ""
-    return  tax, total, tip, deliveryFee, tip2
+    return  tax, total, tip, deliveryFee, tip2 #this function will return a lot of variables that will be stored in orderData dictionary
 
 print ("{0:^60s}".format("Welcome to Arnold's Amazing Eats II! This program will help you fill" + "\n"
      + "all the customer's information, then it will store the customer's order, and then it will print a receipt.")) #This is the welcome message
@@ -163,7 +163,7 @@ while True: #First while loop, in case the user wants to start order again
                 break
     break
 
-orderData["mealPrice"] = meals.get(orderData["mealNumber"], {}).get("Price")
+orderData["mealPrice"] = meals.get(orderData["mealNumber"], {}).get("Price") #This lines store meal information in orderData dictionary
 orderData["mealName"] = meals.get(orderData["mealNumber"], {}).get("Name")
 percentage, discount = discountPercentage(orderData.get("mealPrice")*int(orderData.get("mealQuantity")))
 
@@ -178,10 +178,10 @@ print("GRAND TOTAL: ", "${:.2f}".format(subtotalWithDiscount(orderData.get("meal
 confirmationStudent = str(input("Perfect! Now, is the customer a student? [y/n]:")) #This input will ask if the customer is a student
 while not((confirmationStudent.strip().upper() == ("Y")) or (confirmationStudent.strip().upper() == ("N"))): #Once again, just in case the user types something different from y or n
     confirmationStudent = input("Sorry, that was not a valid answer. Is the customer a student? [y/n]:")
-if confirmationStudent.strip().upper() == "Y":
+if confirmationStudent.strip().upper() == "Y": 
     orderData["isStudent"] = True
-print ("Thanks! Now, is this order for: ")
-print ("")
+print ("Thanks! Now, is this order for: ") #Input for choosing pick up or delivery
+print ("") 
 print ("1. Pick up")
 print ("2. Delivery")
 print ("")
@@ -197,12 +197,12 @@ if confirmationDelivery.strip() == "2":
     print ("2. 15%")
     print ("3. 20%")
     orderData["Tip"] = input("Please select your tip [1/2/3]: ")
-    while not((int(orderData["Tip"]) >= 1) and (int(orderData["Tip"]) <= 3)): #This is done just in case the user types something different from 1 or 2
+    while not((int(orderData["Tip"]) >= 1) and (int(orderData["Tip"]) <= 3)): #Input checker
         orderData["Tip"] = str(input("Please select a valid option: [1/2/3]:")) 
 orderData["HST"], orderData["total"], orderData["Tip"], orderData["deliveryFee"], orderData["Tip%"] = discountStudent(orderData["isStudent"], orderData["delivery"], orderData["Tip"])        
 print ("") #Finally, the following lines will print the receipt
 print ("{0: ^60s}".format(customerData["firstName"] + " " +(customerData["lastName"] if (customerData["lastName"] != customerData["firstName"]) else "")))
-if orderData["delivery"] == True:
+if orderData["delivery"] == True: #This information will display the customer address only if they picked delivery
     print ("{0: ^60s}".format(customerData["address"]))   
     print ("{0: ^60s}".format(("{}").format(customerData["city"] +" "+ customerData["province"] +" "+ customerData["postalCode"])))
 print ("{0: ^60s}".format(customerData["phoneNumber"]))
